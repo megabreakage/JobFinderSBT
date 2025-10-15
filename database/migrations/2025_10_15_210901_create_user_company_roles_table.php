@@ -28,8 +28,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('company_id')->references('id')->on('companies')->restrictOnDelete();
             $table->foreignId('invited_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->unique(['user_id', 'company_id', 'deleted_at']);

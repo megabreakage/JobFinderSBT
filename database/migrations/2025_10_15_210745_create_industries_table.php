@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('parent_id')->references('id')->on('industries')->onDelete('cascade');
+            $table->foreignId('parent_id')->references('id')->on('industries')->restrictOnDelete();
             $table->index(['parent_id', 'is_active']);
             $table->index('sort_order');
             $table->index('deleted_at');
