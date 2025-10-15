@@ -30,9 +30,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('job_posting_id')->references('id')->on('job_postings')->onDelete('cascade');
-            $table->foreign('job_seeker_id')->references('id')->on('job_seekers')->onDelete('cascade');
-            $table->foreign('reviewed_by')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('job_posting_id')->references('id')->on('job_postings')->onDelete('cascade');
+            $table->foreignId('job_seeker_id')->references('id')->on('job_seekers')->onDelete('cascade');
+            $table->foreignId('reviewed_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->unique(['job_posting_id', 'job_seeker_id', 'deleted_at']);
             $table->index(['status', 'created_at']);

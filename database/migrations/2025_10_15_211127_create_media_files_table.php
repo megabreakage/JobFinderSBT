@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('file_size');
             $table->string('disk')->default('public');
             $table->enum('type', ['image', 'document', 'video', 'audio', 'other'])->default('other');
+            $table->foreignId('model_id')->constrained()->restrictOnDelete();
             $table->morphs('model');
             $table->string('collection_name')->nullable();
             $table->json('metadata')->nullable();
@@ -29,9 +30,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('uploaded_by')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('uploaded_by')->references('id')->on('users')->restrictOnDelete();
 
-            $table->index(['model_type', 'model_id']);
+            // $table->index(['model_type', 'model_id']);
             $table->index('deleted_at');
         });
     }

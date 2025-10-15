@@ -31,8 +31,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('hr_package_id')->references('id')->on('hr_packages')->onDelete('cascade');
+            $table->foreignId('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreignId('hr_package_id')->references('id')->on('hr_packages')->onDelete('cascade');
 
             $table->index(['company_id', 'status']);
             $table->index(['status', 'expires_at']);
