@@ -119,7 +119,7 @@ return [
      *
      * To enable, set to true, and then create listeners to watch these events.
      */
-    'events_enabled' => false,
+    'events_enabled' => true,
 
     /*
      * Teams Feature.
@@ -151,7 +151,7 @@ return [
      * setting is false here for optimum safety.
      */
 
-    'display_permission_in_exception' => false,
+    'display_permission_in_exception' => env('APP_DEBUG', false),
 
     /*
      * When set to true, the required role names are added to exception messages.
@@ -159,7 +159,7 @@ return [
      * setting is false here for optimum safety.
      */
 
-    'display_role_in_exception' => false,
+    'display_role_in_exception' => env('APP_DEBUG', false),
 
     /*
      * By default wildcard permission lookups are disabled.
