@@ -17,11 +17,14 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('phone')->nullable();
+            $table->string('phone')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('email_verification_token')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
+            $table->string('phone_verification_otp')->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
             $table->string('password');
-            $table->string('avatar')->nullable();
+            $table->string('avatar_url')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->string('timezone')->default('UTC');
@@ -31,12 +34,18 @@ return new class extends Migration
             $table->boolean('sms_notifications')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->text('last_login_user_agent')->nullable();
             $table->integer('login_attempts')->default(0);
             $table->timestamp('locked_until')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
+            // Indexes for performance
+            $table->index('uuid');
+            $table->index('email');
+            $table->index('phone');
+            $table->index('is_active');
             $table->index(['email', 'deleted_at']);
             $table->index(['phone', 'deleted_at']);
             $table->index(['is_active', 'deleted_at']);
