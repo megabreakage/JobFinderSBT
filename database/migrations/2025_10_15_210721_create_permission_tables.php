@@ -25,9 +25,16 @@ return new class extends Migration
             $table->bigIncrements('id'); // permission id
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->string('display_name')->nullable(); // Human-readable name
+            $table->text('description')->nullable(); // Permission description
+            $table->string('category')->nullable(); // Group permissions by category
+            $table->integer('level')->default(0); // Permission level/hierarchy
+            $table->boolean('is_system')->default(false); // System permissions cannot be deleted
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
+            $table->index('category');
+            $table->index('is_system');
         });
 
         Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames) {
@@ -39,12 +46,19 @@ return new class extends Migration
             }
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->string('display_name')->nullable(); // Human-readable name
+            $table->text('description')->nullable(); // Role description
+            $table->string('category')->nullable(); // Group roles by category
+            $table->integer('level')->default(0); // Role level/hierarchy
+            $table->boolean('is_system')->default(false); // System roles cannot be deleted
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
             } else {
                 $table->unique(['name', 'guard_name']);
             }
+            $table->index('category');
+            $table->index('is_system');
         });
 
         Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
