@@ -32,7 +32,7 @@ return new class extends Migration
 
             $table->foreign('job_posting_id')->references('id')->on('job_postings')->onDelete('cascade');
             $table->foreign('job_seeker_id')->references('id')->on('job_seekers')->onDelete('cascade');
-            $table->foreign('reviewed_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('reviewed_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->unique(['job_posting_id', 'job_seeker_id', 'deleted_at']);
             $table->index(['status', 'created_at']);

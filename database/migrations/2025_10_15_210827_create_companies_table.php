@@ -40,8 +40,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('industry_id')->references('id')->on('industries')->onDelete('set null');
-            $table->foreign('verified_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('industry_id')->references('id')->on('industries')->restrictOnDelete();
+            $table->foreign('verified_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->index(['verification_status', 'is_active']);
             $table->index(['industry_id', 'is_active']);

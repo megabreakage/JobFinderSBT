@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('uploaded_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('uploaded_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->index(['model_type', 'model_id']);
             $table->index('filename');
