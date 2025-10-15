@@ -1,0 +1,127 @@
+name: CI Agent Hook
+
+on:
+  push:
+    branches: [ "development", "martin" ]
+  pull_request:
+    branches: [ "development", "martin" ]
+
+jobs:
+  build-test-analyze:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: laravel
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      # -----------------------------
+      # Setup & Dependencies
+      # -----------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: mbstring, bcmath, pdo, mysql, intl
+          coverage: xdebug
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Node dependencies
+        run: npm install --legacy-peer-deps
+
+      # -----------------------------
+      # Laravel Setup
+      # -----------------------------
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Generate Laravel key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      # -----------------------------
+      # AI Code Analysis Hook
+      # -----------------------------
+      - name: Run AI Code Analysis
+        id: ai-analysis
+        run: |
+          echo "Running AI Code Analysis..."
+          MODIFIED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -Ev '^(vendor|node_modules)/')
+          if [ -z "$MODIFIED_FILES" ]; then
+            echo "No relevant source files modified." > ai_report.txt
+          else
+            echo "Modified source files: $MODIFIED_FILES"
+            # Call your AI Agent script here
+            # Example (dummy output below):
+            echo "AI Suggestions for files: $MODIFIED_FILES" > ai_report.txt
+            echo "- Refactor long methods into smaller ones" >> ai_report.txt
+            echo "- Consider using Repository Pattern for DB queries" >> ai_report.txt
+          fi
+        shell: bash
+
+      - name: Upload AI Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-report
+          path: ai_report.txt
+
+      - name: Comment AI Analysis on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('ai_report.txt', 'utf8');
+            const prNumber = context.payload.pull_request.number;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `🤖 **AI Code Analysis Report**\n\n${report}`
+            });
+
+      # -----------------------------
+      # Testing Hook
+      # -----------------------------
+      - name: Run Backend Tests (PHPUnit/Pest)
+        run: |
+          echo "Running Laravel Tests..."
+          php artisan test --coverage-text --coverage-clover=coverage.xml
+
+      - name: Run Frontend Tests (Jest)
+        run: |
+          echo "Running React Tests..."
+          npm run test -- --watchAll=false
+
+      # -----------------------------
+      # Coverage & Reports
+      # -----------------------------
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
