@@ -56,7 +56,7 @@ class HrPackage extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($package) {
             if (!$package->slug) {
                 $package->slug = \Illuminate\Support\Str::slug($package->name);
@@ -97,7 +97,7 @@ class HrPackage extends Model
             $yearlyFromMonthly = $this->price_monthly * 12;
             return round((($yearlyFromMonthly - $this->price_yearly) / $yearlyFromMonthly) * 100);
         }
-        
+
         return 0;
     }
 }

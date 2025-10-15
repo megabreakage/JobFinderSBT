@@ -42,11 +42,11 @@ return new class extends Migration
             $table->date('expires_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('posted_by_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('industry_id')->references('id')->on('industries')->onDelete('set null');
-            
+
             $table->index(['status', 'is_featured', 'expires_at']);
             $table->index(['company_id', 'status']);
             $table->index(['industry_id', 'status']);

@@ -28,9 +28,9 @@ return new class extends Migration
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->index(['status', 'published_at']);
             $table->index('deleted_at');
             $table->fullText(['title', 'content', 'excerpt']);

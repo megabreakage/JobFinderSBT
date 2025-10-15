@@ -29,11 +29,11 @@ return new class extends Migration
             $table->text('interview_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('job_posting_id')->references('id')->on('job_postings')->onDelete('cascade');
             $table->foreign('job_seeker_id')->references('id')->on('job_seekers')->onDelete('cascade');
             $table->foreign('reviewed_by')->references('id')->on('users')->onDelete('set null');
-            
+
             $table->unique(['job_posting_id', 'job_seeker_id', 'deleted_at']);
             $table->index(['status', 'created_at']);
             $table->index(['job_posting_id', 'status']);

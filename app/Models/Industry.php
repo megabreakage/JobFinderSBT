@@ -40,7 +40,7 @@ class Industry extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($industry) {
             if (!$industry->slug) {
                 $industry->slug = \Illuminate\Support\Str::slug($industry->name);

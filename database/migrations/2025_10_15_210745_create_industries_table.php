@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('sort_order')->default(0);
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('parent_id')->references('id')->on('industries')->onDelete('cascade');
             $table->index(['parent_id', 'is_active']);
             $table->index('sort_order');

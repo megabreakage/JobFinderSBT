@@ -68,7 +68,7 @@ class JobPosting extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($job) {
             $job->uuid = \Illuminate\Support\Str::uuid();
             if (!$job->slug) {
@@ -133,10 +133,10 @@ class JobPosting extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 'active')
-                    ->where(function ($q) {
-                        $q->whereNull('expires_at')
-                          ->orWhere('expires_at', '>', now());
-                    });
+            ->where(function ($q) {
+                $q->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
+            });
     }
 
     /**

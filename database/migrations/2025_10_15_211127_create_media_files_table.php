@@ -28,9 +28,9 @@ return new class extends Migration
             $table->boolean('is_public')->default(true);
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('uploaded_by')->references('id')->on('users')->onDelete('set null');
-            
+
             $table->index(['model_type', 'model_id']);
             $table->index('filename');
             $table->index('deleted_at');

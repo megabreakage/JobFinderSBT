@@ -36,9 +36,9 @@ return new class extends Migration
             $table->date('available_from')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->index(['is_profile_public', 'is_available']);
             $table->index('current_location');
             $table->index('years_of_experience');

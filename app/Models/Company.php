@@ -62,7 +62,7 @@ class Company extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($company) {
             $company->uuid = \Illuminate\Support\Str::uuid();
             if (!$company->slug) {
@@ -103,8 +103,8 @@ class Company extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_company_roles')
-                    ->withPivot(['role_type', 'job_title', 'is_active'])
-                    ->wherePivot('is_active', true);
+            ->withPivot(['role_type', 'job_title', 'is_active'])
+            ->wherePivot('is_active', true);
     }
 
     /**
@@ -129,10 +129,10 @@ class Company extends Model
     public function currentSubscription()
     {
         return $this->subscriptions()
-                    ->where('status', 'active')
-                    ->where('expires_at', '>', now())
-                    ->latest()
-                    ->first();
+            ->where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->latest()
+            ->first();
     }
 
     /**

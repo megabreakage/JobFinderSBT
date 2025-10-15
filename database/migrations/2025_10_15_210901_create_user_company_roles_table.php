@@ -27,11 +27,11 @@ return new class extends Migration
             $table->unsignedBigInteger('invited_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('invited_by')->references('id')->on('users')->onDelete('set null');
-            
+
             $table->unique(['user_id', 'company_id', 'deleted_at']);
             $table->index(['company_id', 'is_active']);
             $table->index(['user_id', 'is_active']);

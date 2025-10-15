@@ -70,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($user) {
             $user->uuid = \Str::uuid();
         });
@@ -132,8 +132,8 @@ class User extends Authenticatable implements JWTSubject
     public function companies()
     {
         return $this->belongsToMany(Company::class, 'user_company_roles')
-                    ->withPivot(['role_type', 'job_title', 'is_active'])
-                    ->wherePivot('is_active', true);
+            ->withPivot(['role_type', 'job_title', 'is_active'])
+            ->wherePivot('is_active', true);
     }
 
     /**

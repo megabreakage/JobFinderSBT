@@ -36,7 +36,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->index(['email', 'deleted_at']);
             $table->index(['phone', 'deleted_at']);
             $table->index(['is_active', 'deleted_at']);
