@@ -43,6 +43,26 @@ return [
             'after_commit' => false,
         ],
 
+        // High priority queue for time-sensitive tasks (emails, SMS)
+        'high' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'high',
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 60),
+            'after_commit' => false,
+        ],
+
+        // Low priority queue for background tasks (analytics, cleanup)
+        'low' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'low',
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 180),
+            'after_commit' => false,
+        ],
+
         'beanstalkd' => [
             'driver' => 'beanstalkd',
             'host' => env('BEANSTALKD_QUEUE_HOST', 'localhost'),
