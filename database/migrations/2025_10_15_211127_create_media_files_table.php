@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('media_files', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('filename');
+            $table->string('filename')->index();
             $table->string('original_filename');
             $table->string('mime_type');
             $table->string('file_path');
@@ -32,7 +32,6 @@ return new class extends Migration
             $table->foreign('uploaded_by')->references('id')->on('users')->restrictOnDelete();
 
             $table->index(['model_type', 'model_id']);
-            $table->index('filename');
             $table->index('deleted_at');
         });
     }
