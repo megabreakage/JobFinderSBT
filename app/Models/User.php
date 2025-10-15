@@ -72,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($user) {
-            $user->uuid = \Str::uuid();
+            $user->uuid = \Illuminate\Support\Str::uuid();
         });
     }
 
