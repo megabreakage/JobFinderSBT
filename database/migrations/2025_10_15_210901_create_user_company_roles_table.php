@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('user_company_roles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('company_id');
             $table->enum('role_type', ['owner', 'admin', 'hr_manager', 'recruiter', 'employee'])->default('employee');
             $table->string('job_title')->nullable();
             $table->text('permissions')->nullable();
@@ -24,13 +22,12 @@ return new class extends Migration
             $table->boolean('can_manage_subscriptions')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamp('joined_at')->nullable();
-            $table->unsignedBigInteger('invited_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreignId('user_id')->references('id')->on('users')->restrictOnDelete();
             $table->foreignId('company_id')->references('id')->on('companies')->restrictOnDelete();
-            $table->foreignId('invited_by')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('invited_by')->nullable()->references('id')->on('users')->restrictOnDelete();
 
             $table->unique(['user_id', 'company_id', 'deleted_at']);
             $table->index(['company_id', 'is_active']);

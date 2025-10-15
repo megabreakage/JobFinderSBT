@@ -28,20 +28,18 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('country')->default('Kenya');
-            $table->unsignedBigInteger('industry_id')->nullable();
             $table->string('company_size')->nullable();
             $table->year('founded_year')->nullable();
             $table->enum('verification_status', ['pending', 'verified', 'rejected'])->default('pending');
             $table->timestamp('verified_at')->nullable();
-            $table->unsignedBigInteger('verified_by')->nullable();
             $table->text('verification_notes')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('industry_id')->references('id')->on('industries')->restrictOnDelete();
-            $table->foreignId('verified_by')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('industry_id')->nullable()->references('id')->on('industries')->restrictOnDelete();
+            $table->foreignId('verified_by')->nullable()->references('id')->on('users')->restrictOnDelete();
 
             $table->index(['verification_status', 'is_active']);
             $table->index(['industry_id', 'is_active']);

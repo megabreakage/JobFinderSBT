@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('job_seekers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
             $table->text('bio')->nullable();
             $table->string('current_job_title')->nullable();
             $table->string('current_company')->nullable();
@@ -37,7 +36,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('user_id')->references('id')->on('users')->restrictOnDelete();
+            $table->foreignId('user_id')->unique()->references('id')->on('users')->restrictOnDelete();
 
             $table->index(['is_profile_public', 'is_available']);
             $table->index('current_location');

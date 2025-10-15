@@ -16,13 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('parent_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('parent_id')->references('id')->on('industries')->restrictOnDelete();
+            $table->foreignId('parent_id')->nullable()->references('id')->on('industries')->restrictOnDelete();
             $table->index(['parent_id', 'is_active']);
             $table->index('sort_order');
             $table->index('deleted_at');

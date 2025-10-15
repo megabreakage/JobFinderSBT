@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('job_postings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('posted_by_user_id');
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('description');
             $table->text('requirements')->nullable();
             $table->text('responsibilities')->nullable();
             $table->text('benefits')->nullable();
-            $table->unsignedBigInteger('industry_id')->nullable();
             $table->enum('type', ['full-time', 'part-time', 'contract', 'freelance', 'internship']);
             $table->enum('experience_level', ['entry', 'mid', 'senior', 'executive'])->default('mid');
             $table->string('location');
@@ -45,7 +42,7 @@ return new class extends Migration
 
             $table->foreignId('company_id')->references('id')->on('companies')->restrictOnDelete();
             $table->foreignId('posted_by_user_id')->references('id')->on('users')->restrictOnDelete();
-            $table->foreignId('industry_id')->references('id')->on('industries')->restrictOnDelete();
+            $table->foreignId('industry_id')->nullable()->references('id')->on('industries')->restrictOnDelete();
 
             $table->index(['status', 'is_featured', 'expires_at']);
             $table->index(['company_id', 'status']);
