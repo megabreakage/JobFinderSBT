@@ -25,7 +25,6 @@ return new class extends Migration
             $table->boolean('is_featured')->default(false);
             $table->integer('sort_order')->default(0);
             $table->timestamp('published_at')->nullable();
-            $table->unsignedBigInteger('author_id');
             $table->timestamps();
             $table->softDeletes();
 

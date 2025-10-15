@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('saved_jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('job_seeker_id');
-            $table->unsignedBigInteger('job_posting_id');
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

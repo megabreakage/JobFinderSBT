@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('hr_package_id');
             $table->enum('billing_cycle', ['monthly', 'yearly']);
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('KES');
