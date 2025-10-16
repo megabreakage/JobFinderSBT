@@ -46,7 +46,7 @@
                     Your password has been successfully reset. You can now log in with your new password.
                 </p>
                 <x-ui.button
-                    href="/login"
+                    href="{{ route('login') }}"
                     variant="primary"
                     size="lg"
                     class="w-full"
@@ -60,7 +60,7 @@
                     This password reset link is invalid or has expired. Please request a new password reset link.
                 </p>
                 <x-ui.button
-                    href="/forgot-password"
+                    href="{{ route('password.request') }}"
                     variant="primary"
                     size="lg"
                     class="w-full"
@@ -113,7 +113,7 @@
             </form>
 
             <div class="mt-6 text-center">
-                <a href="/login" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="{{ route('login') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     ← Back to login
                 </a>
             </div>

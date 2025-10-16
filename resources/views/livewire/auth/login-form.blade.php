@@ -48,7 +48,7 @@
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
 
-                <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="{{ route('password.request') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Forgot password?
                 </a>
             </div>
@@ -67,7 +67,7 @@
         <div class="mt-6 text-center">
             <p class="text-sm text-gray-600">
                 Don't have an account?
-                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="{{ route('register') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                     Create account
                 </a>
             </p>

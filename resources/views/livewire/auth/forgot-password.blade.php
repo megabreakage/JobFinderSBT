@@ -48,7 +48,7 @@
         @else
             <div class="text-center">
                 <x-ui.button
-                    href="/login"
+                    href="{{ route('login') }}"
                     variant="primary"
                     size="lg"
                     class="w-full"
@@ -59,7 +59,7 @@
         @endif
 
         <div class="mt-6 text-center">
-            <a href="/login" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+            <a href="{{ route('login') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                 ← Back to login
             </a>
         </div>

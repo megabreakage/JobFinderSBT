@@ -47,7 +47,7 @@
                     Your email has been successfully verified. You can now access all features of your account.
                 </p>
                 <x-ui.button
-                    href="/login"
+                    href="{{ route('login') }}"
                     variant="primary"
                     size="lg"
                     class="w-full"
@@ -71,7 +71,7 @@
                     </x-ui.button>
                 @else
                     <x-ui.button
-                        href="/login"
+                        href="{{ route('login') }}"
                         variant="primary"
                         size="lg"
                         class="w-full"
