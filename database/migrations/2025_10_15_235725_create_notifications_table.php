@@ -19,8 +19,7 @@ return new class extends Migration
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
-            // Indexes for efficient querying
-            $table->index(['notifiable_type', 'notifiable_id']);
+            // Indexes for efficient querying (morphs already creates the notifiable index)
             $table->index('read_at');
             $table->index('created_at');
         });
