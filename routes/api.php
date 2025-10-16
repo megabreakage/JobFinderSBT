@@ -47,19 +47,27 @@ Route::get('/search', function (Request $request) {
 
 // Authentication routes
 Route::prefix('auth')->group(function () {
+    // Public routes
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::get('me', [AuthController::class, 'me']);
-
-    // Email & Phone verification
+    
+    // Email verification
     Route::post('verify-email', [AuthController::class, 'verifyEmail']);
+    
+    // Phone verification
+    Route::post('send-otp', [AuthController::class, 'sendOtp']);
     Route::post('verify-phone', [AuthController::class, 'verifyPhone']);
-
+    
     // Password reset
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);
+    
+    // Protected routes
+    Route::middleware('auth:api')->group(function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::get('me', [AuthController::class, 'me']);
+    });
 });
 
 // Public job routes
