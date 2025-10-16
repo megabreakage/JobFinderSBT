@@ -1,7 +1,7 @@
 {{-- PHPFlasher Toastr Notifications Component --}}
 {{-- This component renders notifications using PHPFlasher with Livewire persistence --}}
 
-{!! flasher_render() !!}
+<!-- {!! flasher_render() !!} -->
 
 {{-- Legacy session flash support --}}
 @if(session()->has('success'))
