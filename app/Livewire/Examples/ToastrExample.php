@@ -31,11 +31,12 @@ class ToastrExample extends Component
 
     public function showCustom()
     {
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'This is a custom toast with specific options!',
-            'title' => 'Custom Toast'
-        ]);
+        // PHPFlasher allows custom options
+        flash()->success('This is a custom toast with specific options!', 'Custom Toast')
+            ->options([
+                'timeOut' => 10000,
+                'progressBar' => true,
+            ]);
     }
 
     public function showMultiple()
@@ -43,6 +44,32 @@ class ToastrExample extends Component
         $this->toastInfo('First notification');
         $this->toastSuccess('Second notification');
         $this->toastWarning('Third notification');
+    }
+
+    public function showPersistent()
+    {
+        // This notification persists across Livewire updates
+        $this->toastSuccess('This notification persists across Livewire updates!', 'Persistent');
+    }
+
+    public function showImmediate()
+    {
+        // Show notification immediately (for current request only)
+        $this->toastNow('success', 'This shows immediately!', 'Immediate');
+    }
+
+    public function showWithDelay()
+    {
+        // Show notification with custom delay
+        flash()->success('This notification has a custom delay!', 'Delayed')
+            ->delay(2000);
+    }
+
+    public function showWithPriority()
+    {
+        // Show notification with priority
+        flash()->success('High priority notification!', 'Priority')
+            ->priority(10);
     }
 
     public function render()

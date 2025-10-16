@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Flasher\Prime\FlasherInterface;
+
 trait WithToastr
 {
     /**
@@ -13,7 +15,7 @@ trait WithToastr
      */
     protected function toastSuccess(string $message, ?string $title = 'Success'): void
     {
-        $this->dispatchToast('success', $message, $title);
+        flash()->success($message, $title);
     }
 
     /**
@@ -25,7 +27,7 @@ trait WithToastr
      */
     protected function toastError(string $message, ?string $title = 'Error'): void
     {
-        $this->dispatchToast('error', $message, $title);
+        flash()->error($message, $title);
     }
 
     /**
@@ -37,7 +39,7 @@ trait WithToastr
      */
     protected function toastWarning(string $message, ?string $title = 'Warning'): void
     {
-        $this->dispatchToast('warning', $message, $title);
+        flash()->warning($message, $title);
     }
 
     /**
@@ -49,78 +51,105 @@ trait WithToastr
      */
     protected function toastInfo(string $message, ?string $title = 'Info'): void
     {
-        $this->dispatchToast('info', $message, $title);
+        flash()->info($message, $title);
     }
 
     /**
-     * Dispatch toast notification
+     * Display a toast notification with custom options
      *
      * @param string $type
      * @param string $message
      * @param string|null $title
+     * @param array $options
      * @return void
      */
-    protected function dispatchToast(string $type, string $message, ?string $title = null): void
+    protected function toast(string $type, string $message, ?string $title = null, array $options = []): void
     {
-        // For Livewire components
-        if (method_exists($this, 'dispatch')) {
-            $this->dispatch('toast', [
-                'type' => $type,
-                'message' => $message,
-                'title' => $title
-            ]);
-        }
-        // For regular controllers
-        else {
-            session()->flash('toast', [
-                'type' => $type,
-                'message' => $message,
-                'title' => $title
-            ]);
+        $notification = flash($type, $message, $title);
+        
+        if (!empty($options)) {
+            $notification->options($options);
         }
     }
 
     /**
-     * Flash a success message to session
+     * Flash a success message to session (legacy support)
      *
      * @param string $message
      * @return void
      */
     protected function flashSuccess(string $message): void
     {
-        session()->flash('success', $message);
+        flash()->success($message);
     }
 
     /**
-     * Flash an error message to session
+     * Flash an error message to session (legacy support)
      *
      * @param string $message
      * @return void
      */
     protected function flashError(string $message): void
     {
-        session()->flash('error', $message);
+        flash()->error($message);
     }
 
     /**
-     * Flash a warning message to session
+     * Flash a warning message to session (legacy support)
      *
      * @param string $message
      * @return void
      */
     protected function flashWarning(string $message): void
     {
-        session()->flash('warning', $message);
+        flash()->warning($message);
     }
 
     /**
-     * Flash an info message to session
+     * Flash an info message to session (legacy support)
      *
      * @param string $message
      * @return void
      */
     protected function flashInfo(string $message): void
     {
-        session()->flash('info', $message);
+        flash()->info($message);
+    }
+
+    /**
+     * Display a notification that persists across Livewire updates
+     *
+     * @param string $type
+     * @param string $message
+     * @param string|null $title
+     * @return void
+     */
+    protected function toastNow(string $type, string $message, ?string $title = null): void
+    {
+        flash()->now($type, $message, $title);
+    }
+
+    /**
+     * Display a success notification immediately
+     *
+     * @param string $message
+     * @param string|null $title
+     * @return void
+     */
+    protected function toastSuccessNow(string $message, ?string $title = 'Success'): void
+    {
+        flash()->now('success', $message, $title);
+    }
+
+    /**
+     * Display an error notification immediately
+     *
+     * @param string $message
+     * @param string|null $title
+     * @return void
+     */
+    protected function toastErrorNow(string $message, ?string $title = 'Error'): void
+    {
+        flash()->now('error', $message, $title);
     }
 }

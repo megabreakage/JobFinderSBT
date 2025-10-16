@@ -81,14 +81,14 @@
     {{-- Advanced Examples --}}
     <x-ui.card>
         <x-slot:header>
-            <h3 class="text-lg font-medium">Advanced Examples</h3>
+            <h3 class="text-lg font-medium">Advanced Examples (PHPFlasher)</h3>
         </x-slot:header>
 
         <div class="space-y-4">
             <div>
                 <h4 class="font-medium text-gray-900 mb-2">Custom Toast</h4>
                 <p class="text-sm text-gray-600 mb-3">
-                    Dispatch custom toast with specific options
+                    Toast with custom timeout and options
                 </p>
                 <x-ui.button variant="outline" wire:click="showCustom">
                     Show Custom Toast
@@ -102,6 +102,46 @@
                 </p>
                 <x-ui.button variant="outline" wire:click="showMultiple">
                     Show Multiple Toasts
+                </x-ui.button>
+            </div>
+
+            <div class="border-t pt-4">
+                <h4 class="font-medium text-gray-900 mb-2">Persistent Toast</h4>
+                <p class="text-sm text-gray-600 mb-3">
+                    Notification persists across Livewire updates
+                </p>
+                <x-ui.button variant="outline" wire:click="showPersistent">
+                    Show Persistent Toast
+                </x-ui.button>
+            </div>
+
+            <div class="border-t pt-4">
+                <h4 class="font-medium text-gray-900 mb-2">Immediate Toast</h4>
+                <p class="text-sm text-gray-600 mb-3">
+                    Show notification immediately (current request only)
+                </p>
+                <x-ui.button variant="outline" wire:click="showImmediate">
+                    Show Immediate Toast
+                </x-ui.button>
+            </div>
+
+            <div class="border-t pt-4">
+                <h4 class="font-medium text-gray-900 mb-2">Delayed Toast</h4>
+                <p class="text-sm text-gray-600 mb-3">
+                    Notification with custom delay before showing
+                </p>
+                <x-ui.button variant="outline" wire:click="showWithDelay">
+                    Show Delayed Toast
+                </x-ui.button>
+            </div>
+
+            <div class="border-t pt-4">
+                <h4 class="font-medium text-gray-900 mb-2">Priority Toast</h4>
+                <p class="text-sm text-gray-600 mb-3">
+                    High priority notification
+                </p>
+                <x-ui.button variant="outline" wire:click="showWithPriority">
+                    Show Priority Toast
                 </x-ui.button>
             </div>
         </div>
@@ -190,10 +230,14 @@ toast('success', 'Message here', 'Custom Title');</code></pre>
     {{-- Features --}}
     <x-ui.card>
         <x-slot:header>
-            <h3 class="text-lg font-medium">Features</h3>
+            <h3 class="text-lg font-medium">PHPFlasher Features</h3>
         </x-slot:header>
 
         <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+                <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
+                <span><strong>Livewire Persistence:</strong> Notifications persist across Livewire updates</span>
+            </li>
             <li class="flex items-start gap-2">
                 <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
                 <span><strong>Close Button:</strong> Users can dismiss notifications</span>
@@ -216,7 +260,11 @@ toast('success', 'Message here', 'Custom Title');</code></pre>
             </li>
             <li class="flex items-start gap-2">
                 <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
-                <span><strong>Livewire Integration:</strong> Works seamlessly with Livewire</span>
+                <span><strong>Priority System:</strong> Control notification display order</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
+                <span><strong>Delayed Display:</strong> Show notifications after a delay</span>
             </li>
             <li class="flex items-start gap-2">
                 <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
@@ -225,6 +273,10 @@ toast('success', 'Message here', 'Custom Title');</code></pre>
             <li class="flex items-start gap-2">
                 <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
                 <span><strong>Validation Errors:</strong> Automatically displays validation errors</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <x-icon name="check" size="sm" class="text-green-600 mt-0.5" />
+                <span><strong>Queue Support:</strong> Queue notifications for later display</span>
             </li>
         </ul>
     </x-ui.card>

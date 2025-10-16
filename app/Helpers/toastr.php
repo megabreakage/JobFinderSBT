@@ -1,35 +1,16 @@
 <?php
 
-if (!function_exists('toast')) {
-    /**
-     * Display a toast notification
-     *
-     * @param string $type
-     * @param string $message
-     * @param string|null $title
-     * @return void
-     */
-    function toast(string $type, string $message, ?string $title = null): void
-    {
-        session()->flash('toast', [
-            'type' => $type,
-            'message' => $message,
-            'title' => $title
-        ]);
-    }
-}
-
 if (!function_exists('toast_success')) {
     /**
      * Display a success toast notification
      *
      * @param string $message
      * @param string|null $title
-     * @return void
+     * @return \Flasher\Prime\Notification\NotificationInterface
      */
-    function toast_success(string $message, ?string $title = 'Success'): void
+    function toast_success(string $message, ?string $title = 'Success')
     {
-        toast('success', $message, $title);
+        return flash()->success($message, $title);
     }
 }
 
@@ -39,11 +20,11 @@ if (!function_exists('toast_error')) {
      *
      * @param string $message
      * @param string|null $title
-     * @return void
+     * @return \Flasher\Prime\Notification\NotificationInterface
      */
-    function toast_error(string $message, ?string $title = 'Error'): void
+    function toast_error(string $message, ?string $title = 'Error')
     {
-        toast('error', $message, $title);
+        return flash()->error($message, $title);
     }
 }
 
@@ -53,11 +34,11 @@ if (!function_exists('toast_warning')) {
      *
      * @param string $message
      * @param string|null $title
-     * @return void
+     * @return \Flasher\Prime\Notification\NotificationInterface
      */
-    function toast_warning(string $message, ?string $title = 'Warning'): void
+    function toast_warning(string $message, ?string $title = 'Warning')
     {
-        toast('warning', $message, $title);
+        return flash()->warning($message, $title);
     }
 }
 
@@ -67,10 +48,25 @@ if (!function_exists('toast_info')) {
      *
      * @param string $message
      * @param string|null $title
-     * @return void
+     * @return \Flasher\Prime\Notification\NotificationInterface
      */
-    function toast_info(string $message, ?string $title = 'Info'): void
+    function toast_info(string $message, ?string $title = 'Info')
     {
-        toast('info', $message, $title);
+        return flash()->info($message, $title);
+    }
+}
+
+if (!function_exists('toast_now')) {
+    /**
+     * Display a toast notification immediately (for Livewire)
+     *
+     * @param string $type
+     * @param string $message
+     * @param string|null $title
+     * @return \Flasher\Prime\Notification\NotificationInterface
+     */
+    function toast_now(string $type, string $message, ?string $title = null)
+    {
+        return flash()->now($type, $message, $title);
     }
 }

@@ -1,59 +1,28 @@
-{{-- Toastr Notifications Component --}}
-{{-- This component handles session flash messages and displays them as toastr notifications --}}
+{{-- PHPFlasher Toastr Notifications Component --}}
+{{-- This component renders notifications using PHPFlasher with Livewire persistence --}}
 
-@if(session()->has('toast'))
-    @php
-        $toast = session('toast');
-        $type = $toast['type'] ?? 'info';
-        $message = $toast['message'] ?? '';
-        $title = $toast['title'] ?? '';
-    @endphp
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toastr.{{ $type }}('{{ $message }}', '{{ $title }}');
-        });
-    </script>
-@endif
+{!! flasher_render() !!}
 
+{{-- Legacy session flash support --}}
 @if(session()->has('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toastr.success('{{ session('success') }}', 'Success');
-        });
-    </script>
+    @php flash()->success(session('success')); @endphp
 @endif
 
 @if(session()->has('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toastr.error('{{ session('error') }}', 'Error');
-        });
-    </script>
+    @php flash()->error(session('error')); @endphp
 @endif
 
 @if(session()->has('warning'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toastr.warning('{{ session('warning') }}', 'Warning');
-        });
-    </script>
+    @php flash()->warning(session('warning')); @endphp
 @endif
 
 @if(session()->has('info'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toastr.info('{{ session('info') }}', 'Info');
-        });
-    </script>
+    @php flash()->info(session('info')); @endphp
 @endif
 
+{{-- Validation errors --}}
 @if($errors->any())
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @foreach($errors->all() as $error)
-                toastr.error('{{ $error }}', 'Validation Error');
-            @endforeach
-        });
-    </script>
+    @foreach($errors->all() as $error)
+        @php flash()->error($error, 'Validation Error'); @endphp
+    @endforeach
 @endif
