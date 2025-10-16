@@ -50,7 +50,7 @@
     <!-- Main Content -->
     <main class="min-h-screen flex flex-col sm:justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full sm:max-w-md">
-            {{ $slot }}
+            @yield('content')
         </div>
     </main>
 

@@ -1,3 +1,5 @@
-<x-layouts.guest>
+@extends('layouts.guest')
+
+@section('content')
     <livewire:auth.verify-email :token="$token ?? null" />
-</x-layouts.guest>
+@endsection

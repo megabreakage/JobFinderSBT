@@ -1,3 +1,5 @@
-<x-layouts.guest>
+@extends('layouts.guest')
+
+@section('content')
     <livewire:auth.forgot-password />
-</x-layouts.guest>
+@endsection

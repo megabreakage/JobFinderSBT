@@ -1,3 +1,5 @@
-<x-layouts.guest>
+@extends('layouts.guest')
+
+@section('content')
     <livewire:auth.register-form />
-</x-layouts.guest>
+@endsection

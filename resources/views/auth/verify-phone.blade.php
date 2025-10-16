@@ -1,3 +1,5 @@
-<x-layouts.guest>
+@extends('layouts.guest')
+
+@section('content')
     <livewire:auth.verify-phone />
-</x-layouts.guest>
+@endsection

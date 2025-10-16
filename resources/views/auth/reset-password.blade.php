@@ -1,3 +1,5 @@
-<x-layouts.guest>
+@extends('layouts.guest')
+
+@section('content')
     <livewire:auth.reset-password :token="$token" :email="request('email')" />
-</x-layouts.guest>
+@endsection

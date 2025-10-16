@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Livewire\Examples\SearchSelectExample;
 use App\Livewire\Examples\ToastrExample;
 
@@ -44,6 +45,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/verify-phone', function () {
         return view('auth.verify-phone');
     })->name('verification.phone');
+
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Logout
+    Route::post('/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/');
+    })->name('logout');
 });
 
 // Component Examples (for development/testing)
