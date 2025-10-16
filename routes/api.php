@@ -25,6 +25,26 @@ Route::get('/health', function () {
     return response()->json(['status' => 'OK', 'timestamp' => now()]);
 });
 
+// Example search endpoint for search-select component
+Route::get('/search', function (Request $request) {
+    $query = $request->input('q', '');
+    
+    // Example data - replace with actual database queries
+    $items = [
+        ['id' => 1, 'name' => 'Software Engineer', 'category' => 'Technology'],
+        ['id' => 2, 'name' => 'Product Manager', 'category' => 'Management'],
+        ['id' => 3, 'name' => 'Data Analyst', 'category' => 'Analytics'],
+        ['id' => 4, 'name' => 'UX Designer', 'category' => 'Design'],
+        ['id' => 5, 'name' => 'Marketing Manager', 'category' => 'Marketing'],
+    ];
+    
+    $results = collect($items)->filter(function ($item) use ($query) {
+        return stripos($item['name'], $query) !== false;
+    })->values();
+    
+    return response()->json(['results' => $results]);
+});
+
 // Authentication routes
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
