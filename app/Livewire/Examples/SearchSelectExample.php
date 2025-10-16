@@ -3,12 +3,36 @@
 namespace App\Livewire\Examples;
 
 use Livewire\Component;
+use App\Traits\WithToastr;
 
 class SearchSelectExample extends Component
 {
+    use WithToastr;
+    
     public $selectedUserId;
     public $selectedCompanyId;
     public $selectedJobId;
+    
+    public function updatedSelectedUserId($value)
+    {
+        if ($value) {
+            $this->toastSuccess('User selected successfully!', 'Selection Updated');
+        }
+    }
+    
+    public function updatedSelectedCompanyId($value)
+    {
+        if ($value) {
+            $this->toastInfo('Company selected: ID ' . $value, 'Selection Updated');
+        }
+    }
+    
+    public function updatedSelectedJobId($value)
+    {
+        if ($value) {
+            $this->toastSuccess('Job selected successfully!', 'Selection Updated');
+        }
+    }
 
     /**
      * Search users by name or email
