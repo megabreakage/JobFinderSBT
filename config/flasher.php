@@ -5,10 +5,6 @@ return [
     |--------------------------------------------------------------------------
     | Default Notification Library
     |--------------------------------------------------------------------------
-    |
-    | This option controls the default notification library that will be used
-    | by the framework.
-    |
     */
     'default' => 'toastr',
 
@@ -16,9 +12,6 @@ return [
     |--------------------------------------------------------------------------
     | Notification Libraries
     |--------------------------------------------------------------------------
-    |
-    | Here you may configure as many notification libraries as you wish.
-    |
     */
     'libraries' => [
         'toastr' => [
@@ -52,10 +45,6 @@ return [
     |--------------------------------------------------------------------------
     | Inject Assets
     |--------------------------------------------------------------------------
-    |
-    | If set to true, the library will automatically inject the required
-    | JavaScript and CSS files into your HTML response.
-    |
     */
     'inject_assets' => true,
 
@@ -63,10 +52,6 @@ return [
     |--------------------------------------------------------------------------
     | Translate Messages
     |--------------------------------------------------------------------------
-    |
-    | If set to true, the library will automatically translate notification
-    | messages using Laravel's translation system.
-    |
     */
     'translate' => true,
 
@@ -74,9 +59,6 @@ return [
     |--------------------------------------------------------------------------
     | Flash Bag
     |--------------------------------------------------------------------------
-    |
-    | The flash bag is used to store notifications between requests.
-    |
     */
     'flash_bag' => [
         'enabled' => true,
@@ -87,9 +69,6 @@ return [
     |--------------------------------------------------------------------------
     | Filter Criteria
     |--------------------------------------------------------------------------
-    |
-    | Filter notifications based on specific criteria.
-    |
     */
     'filter_criteria' => [],
 
@@ -97,9 +76,27 @@ return [
     |--------------------------------------------------------------------------
     | Main Script
     |--------------------------------------------------------------------------
-    |
-    | The main PHPFlasher JavaScript file.
-    |
     */
     'main_script' => '/vendor/flasher/flasher.min.js',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Criteria
+    |--------------------------------------------------------------------------
+    */
+    'criteria' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Excluded Paths
+    |--------------------------------------------------------------------------
+    */
+    'excluded_paths' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto Render
+    |--------------------------------------------------------------------------
+    */
+    'auto_render' => true,
 ];
