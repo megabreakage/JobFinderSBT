@@ -12,13 +12,14 @@ class EmailLog extends Model
      */
     protected $fillable = [
         'user_id',
-        'to',
+        'to_email',
+        'from_email',
         'subject',
         'template',
+        'body',
         'status',
         'error_message',
         'sent_at',
-        'failed_at',
     ];
 
     /**
@@ -77,6 +78,6 @@ class EmailLog extends Model
      */
     public function scopeToRecipient($query, string $email)
     {
-        return $query->where('to', $email);
+        return $query->where('to_email', $email);
     }
 }

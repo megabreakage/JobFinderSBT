@@ -109,7 +109,7 @@ class LoginForm extends Component
             RateLimiter::clear($key);
 
             // Reset failed attempts
-            $user->failed_login_attempts = 0;
+            $user->login_attempts = 0;
             $user->locked_until = null;
             $user->last_login_at = now();
             $user->last_login_ip = request()->ip();

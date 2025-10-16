@@ -190,7 +190,7 @@ class EmailService extends BaseService
     ): EmailLog {
         return EmailLog::create([
             'user_id' => $userId,
-            'to' => $to,
+            'to_email' => $to,
             'subject' => $subject,
             'template' => $template,
             'status' => $status,
