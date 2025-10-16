@@ -72,15 +72,27 @@ class RegisterForm extends Component
                 'password' => Hash::make($this->password),
             ], $this->role);
 
-            // Send verification email
+            // Generate and save verification token
             $token = $authService->generateEmailVerificationToken();
             $user->email_verification_token = $token;
             $user->save();
 
-            $emailService->sendVerificationEmail($user, $token);
+            // Try to send verification email (don't fail registration if email fails)
+            try {
+                $emailService->sendVerificationEmail($user, $token);
+                $emailSent = true;
+            } catch (\Exception $emailError) {
+                logger()->warning('Failed to send verification email: ' . $emailError->getMessage());
+                $emailSent = false;
+            }
 
             $this->success = true;
-            $this->successMessage = 'Registration successful! Please check your email to verify your account.';
+            
+            if ($emailSent) {
+                $this->successMessage = 'Registration successful! Please check your email to verify your account.';
+            } else {
+                $this->successMessage = 'Registration successful! However, we could not send the verification email. Please contact support.';
+            }
             
             // Reset form
             $this->reset(['first_name', 'last_name', 'email', 'phone', 'password', 'password_confirmation', 'role', 'terms_accepted']);
