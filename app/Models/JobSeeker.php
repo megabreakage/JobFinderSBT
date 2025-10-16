@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class JobSeeker extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -80,6 +83,32 @@ class JobSeeker extends Model
     }
 
     /**
+     * Education records relationship.
+     */
+    public function education(): HasMany
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    /**
+     * Work experiences relationship.
+     */
+    public function workExperiences(): HasMany
+    {
+        return $this->hasMany(WorkExperience::class);
+    }
+
+    /**
+     * Skills relationship (many-to-many).
+     */
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'job_seeker_skills')
+            ->withPivot('proficiency_level', 'years_of_experience')
+            ->withTimestamps();
+    }
+
+    /**
      * Scope for public profiles.
      */
     public function scopePublic($query)
@@ -107,5 +136,25 @@ class JobSeeker extends Model
         }
 
         return 'Not specified';
+    }
+
+    /**
+     * Configure activity logging.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'bio',
+                'current_job_title',
+                'years_of_experience',
+                'current_location',
+                'expected_salary_min',
+                'expected_salary_max',
+                'is_profile_public',
+                'is_available',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }
