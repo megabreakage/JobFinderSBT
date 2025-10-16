@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -129,11 +130,19 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Companies relationship.
      */
-    public function companies()
+    public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class, 'user_company_roles')
             ->withPivot(['role_type', 'job_title', 'is_active'])
             ->wherePivot('is_active', true);
+    }
+
+    /**
+     * Notifications relationship.
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(\App\Models\Notification::class);
     }
 
     /**
@@ -182,5 +191,13 @@ class User extends Authenticatable implements JWTSubject
     public function scopeVerified($query)
     {
         return $query->whereNotNull('email_verified_at');
+    }
+
+    /**
+     * Scope for users with a specific role.
+     */
+    public function scopeWithRole($query, string $role)
+    {
+        return $query->role($role);
     }
 }
