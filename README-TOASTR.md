@@ -1,11 +1,14 @@
-# 🎉 Toastr Notifications - Implementation Complete!
+# 🎉 PHPFlasher with Toastr - Implementation Complete!
 
-Beautiful toast notifications have been successfully installed and integrated into your Laravel application!
+Beautiful toast notifications with **Livewire persistence** have been successfully installed and integrated into your Laravel application!
 
 ## ✅ What's Included
 
 - **4 Notification Types**: Success, Error, Warning, Info
+- **Livewire Persistence**: Notifications persist across component updates ⭐
 - **Multiple Integration Methods**: Livewire, Controllers, Helpers, Session Flash
+- **Priority System**: Control notification display order
+- **Delayed Display**: Show notifications after a delay
 - **Auto-dismiss**: Notifications disappear after 5 seconds
 - **Progress Bar**: Visual countdown
 - **Close Button**: Manual dismissal
@@ -115,6 +118,28 @@ session()->flash('warning', 'Please review your input.');
 $this->toastInfo('Processing your request...');
 toast_info('Processing your request...');
 session()->flash('info', 'Processing your request...');
+```
+
+### New: Persistent Notifications (Livewire)
+```php
+// Notification persists across Livewire updates!
+$this->toastSuccess('Saved!');
+$this->dispatch('$refresh'); // Notification still shows ✅
+```
+
+### New: Immediate Notifications
+```php
+// Show only on current request (doesn't persist)
+$this->toastNow('success', 'Immediate notification!');
+```
+
+### New: Custom Options
+```php
+// With delay and priority
+flash()->success('Custom notification!')
+    ->delay(2000)
+    ->priority(10)
+    ->options(['timeOut' => 10000]);
 ```
 
 ## 🎨 Features
