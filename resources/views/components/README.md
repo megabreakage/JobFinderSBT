@@ -21,6 +21,63 @@ Text input field with label, error, hint, and icon support.
 />
 ```
 
+**Input Groups with Prepend/Append:**
+
+```blade
+{{-- Prepend text --}}
+<x-form.input
+    name="website"
+    label="Website"
+    placeholder="example.com"
+    wire:model="website"
+>
+    <x-slot:prepend>https://</x-slot:prepend>
+</x-form.input>
+
+{{-- Append text --}}
+<x-form.input
+    name="price"
+    label="Price"
+    type="number"
+    wire:model="price"
+>
+    <x-slot:append>USD</x-slot:append>
+</x-form.input>
+
+{{-- Prepend icon --}}
+<x-form.input
+    name="username"
+    label="Username"
+    wire:model="username"
+>
+    <x-slot:prepend>
+        <x-icon name="user" size="sm" />
+    </x-slot:prepend>
+</x-form.input>
+
+{{-- Both prepend and append --}}
+<x-form.input
+    name="discount"
+    label="Discount"
+    type="number"
+    wire:model="discount"
+>
+    <x-slot:prepend>$</x-slot:prepend>
+    <x-slot:append>.00</x-slot:append>
+</x-form.input>
+
+{{-- Append button --}}
+<x-form.input
+    name="search"
+    label="Search"
+    wire:model="searchTerm"
+>
+    <x-slot:append>
+        <x-ui.button size="sm" wire:click="search">Search</x-ui.button>
+    </x-slot:append>
+</x-form.input>
+```
+
 ### Select (`<x-form.select>`)
 Dropdown select with options, placeholder, and multiple selection support.
 
@@ -33,6 +90,45 @@ Dropdown select with options, placeholder, and multiple selection support.
     wire:model="role"
     required
 />
+```
+
+**Select with Input Groups:**
+
+```blade
+{{-- Prepend icon --}}
+<x-form.select
+    name="country"
+    label="Country"
+    :options="$countries"
+    wire:model="country"
+>
+    <x-slot:prepend>
+        <x-icon name="map-pin" size="sm" />
+    </x-slot:prepend>
+</x-form.select>
+
+{{-- Append text --}}
+<x-form.select
+    name="currency"
+    label="Currency"
+    :options="['usd' => 'US Dollar', 'eur' => 'Euro']"
+    wire:model="currency"
+>
+    <x-slot:append>Currency</x-slot:append>
+</x-form.select>
+
+{{-- Prepend and append --}}
+<x-form.select
+    name="timezone"
+    label="Timezone"
+    :options="$timezones"
+    wire:model="timezone"
+>
+    <x-slot:prepend>
+        <x-icon name="clock" size="sm" />
+    </x-slot:prepend>
+    <x-slot:append>GMT</x-slot:append>
+</x-form.select>
 ```
 
 ### Checkbox (`<x-form.checkbox>`)
@@ -70,6 +166,61 @@ Multi-line text input with configurable rows.
     placeholder="Tell us about yourself"
     wire:model="bio"
 />
+```
+
+### Input Group (`<x-form.input-group>`)
+Flexible container for grouping form elements with addons. Use this for complex input groups with multiple elements.
+
+```blade
+{{-- Basic input group with text addons --}}
+<x-form.input-group label="Website URL" hint="Enter your website address">
+    <x-form.input-addon position="prepend">https://</x-form.input-addon>
+    <input
+        type="text"
+        name="url"
+        wire:model="url"
+        class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+    />
+    <x-form.input-addon position="append">.com</x-form.input-addon>
+</x-form.input-group>
+
+{{-- Input group with icon and button --}}
+<x-form.input-group label="Search Jobs">
+    <x-form.input-addon position="prepend">
+        <x-icon name="magnifying-glass" size="sm" />
+    </x-form.input-addon>
+    <input
+        type="text"
+        name="search"
+        wire:model="searchQuery"
+        placeholder="Job title, keywords..."
+        class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+    />
+    <x-ui.button wire:click="search" class="rounded-l-none">
+        Search
+    </x-ui.button>
+</x-form.input-group>
+
+{{-- Multiple inputs in a group --}}
+<x-form.input-group label="Price Range">
+    <x-form.input-addon position="prepend">$</x-form.input-addon>
+    <input
+        type="number"
+        name="min_price"
+        wire:model="minPrice"
+        placeholder="Min"
+        class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm rounded-none"
+    />
+    <x-form.input-addon position="append">to</x-form.input-addon>
+    <input
+        type="number"
+        name="max_price"
+        wire:model="maxPrice"
+        placeholder="Max"
+        class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm rounded-none"
+    />
+    <x-form.input-addon position="append">$</x-form.input-addon>
+</x-form.input-group>
 ```
 
 ## UI Components
@@ -212,3 +363,19 @@ Sizes: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
 - All components use Tailwind CSS classes for styling
 - Components are designed to be accessible and responsive
 - The modal component uses Livewire properties instead of Alpine.js for state management
+
+## Input Grouping
+
+The form components support two approaches for input grouping:
+
+### 1. Slot-based (Simple)
+Use `prepend` and `append` slots directly on `<x-form.input>` and `<x-form.select>` components for simple text, icons, or single elements.
+
+### 2. Component-based (Advanced)
+Use `<x-form.input-group>` with `<x-form.input-addon>` for complex scenarios requiring:
+- Multiple inputs in a single group
+- Custom styling or layouts
+- Buttons or other interactive elements
+- Fine-grained control over element positioning
+
+Both approaches provide flexible ways to enhance form inputs with contextual information, icons, units, or actions.
