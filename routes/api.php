@@ -45,10 +45,10 @@ Route::get('/search', function (Request $request) {
     return response()->json(['results' => $results]);
 });
 
-// Authentication routes
-Route::prefix('auth')->group(function () {
+// Authentication routes with rate limiting
+Route::prefix('auth')->middleware('throttle:auth')->group(function () {
     // Public routes
-    Route::post('login', [AuthController::class, 'login']);
+    Route::post('login', [AuthController::class, 'login'])->middleware('account.lockout');
     Route::post('register', [AuthController::class, 'register']);
     
     // Email verification
@@ -87,8 +87,8 @@ Route::prefix('companies')->group(function () {
 // Public HR packages
 Route::get('hr-packages', [HrPackageController::class, 'index']);
 
-// Protected routes
-Route::middleware('auth:api')->group(function () {
+// Protected routes with general API rate limiting
+Route::middleware(['auth:api', 'throttle:api'])->group(function () {
 
     // Job Seeker routes
     Route::middleware('role:job-seeker')->group(function () {
